@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trainbuddy/ui/view_models/alarm_view_model.dart';
 import 'package:trainbuddy/ui/widgets/alarms/alarm_form_widget.dart';
 
@@ -11,20 +12,21 @@ class _AlarmCreateViewState extends State<AlarmCreateView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Set a New Alarm'),
-      ),
-      body: ListView(
-        children: [
-          AlarmFormWidget(onSubmit: (name, transitLocation, arriveBy) {
-            AlarmViewModel.of(context).add(
-                name: name,
-                transitLocation: transitLocation,
-                arriveBy: arriveBy);
-            Navigator.pop(context);
-          })
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Set a New Alarm'),
+        ),
+        body: Consumer<AlarmViewModel>(
+          builder: (context, alarmViewModel, child) => ListView(
+            children: [
+              AlarmFormWidget(onSubmit: (name, transitLocation, arriveBy) {
+                alarmViewModel.add(
+                    name: name,
+                    transitLocation: transitLocation,
+                    arriveBy: arriveBy);
+                Navigator.pop(context);
+              })
+            ],
+          ),
+        ));
   }
 }

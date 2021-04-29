@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:trainbuddy/models/alarm.dart';
 
-class AlarmViewModel extends InheritedWidget {
-  AlarmViewModel({@required Widget child}) : super(child: child);
+class AlarmViewModel extends ChangeNotifier {
+  AlarmViewModel();
 
-  final List<Alarm> alarms = Alarm.all();
+  final List<Alarm> _alarms = Alarm.all();
+
+  List<Alarm> get alarms => _alarms;
 
   void add({@required name, @required transitLocation, @required arriveBy}) {
-    Alarm.add(name: name, transitLocation: transitLocation, arriveBy: arriveBy);
+    // Alarm.add(name: name, transitLocation: transitLocation, arriveBy: arriveBy);
+    _alarms.add(new Alarm(
+        name: name, transitLocation: transitLocation, arriveBy: arriveBy));
+    notifyListeners();
   }
 
-  void remove(int index) {
-    alarms.remove(index);
+  void delete(int index) {
+    _alarms.removeAt(index);
+    notifyListeners();
   }
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
-
-  static AlarmViewModel of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<AlarmViewModel>();
 }
