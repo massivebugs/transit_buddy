@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trainbuddy/ui/views/alarms/alarm_show_view.dart';
-import 'package:trainbuddy/models/alarm.dart';
+import 'package:transit_buddy/ui/views/alarms/alarm_show_view.dart';
+import 'package:transit_buddy/models/alarm.dart';
 import 'package:intl/intl.dart';
 
 class AlarmListWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class AlarmListWidget extends StatelessWidget {
         return Dismissible(
             key: Key(item.name),
             onDismissed: (direction) {
-              onRemove(index);
+              onRemove(item.id);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('${item.name} has been removed!'),
               ));

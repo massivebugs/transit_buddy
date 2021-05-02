@@ -1,4 +1,4 @@
-# trainbuddy
+# transit_buddy
 
 A new Flutter project.
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trainbuddy/models/alarm.dart';
+import 'package:transit_buddy/models/alarm.dart';
 
 class AlarmShowView extends StatelessWidget {
   final Alarm alarm;

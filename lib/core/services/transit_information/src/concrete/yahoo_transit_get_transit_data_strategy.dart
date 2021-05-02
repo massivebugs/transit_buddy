@@ -1,4 +1,4 @@
-// import 'package:trainbuddy/constants/app_constants.dart';
+// import 'package:transit_buddy/constants/app_constants.dart';
 // import 'package:web_scraper/web_scraper.dart';
 // import 'dart:io';
 

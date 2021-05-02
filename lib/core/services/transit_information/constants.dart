@@ -1,7 +1,4 @@
 class AppConstants {
-  static const String APP_TITLE = "Transit Buddy";
-  static const String DB_NAME = "transit_buddy";
-
   static const String REQUEST_URL = "https://transit.yahoo.co.jp";
   static const String REQUEST_ENDPOINT = "/search/result";
   static const List<String> REQUEST_PARAMS = ["from", "to"];

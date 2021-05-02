@@ -1,4 +1,4 @@
-package com.example.trainbuddy
+package com.example.transit_buddy
 
 import io.flutter.embedding.android.FlutterActivity
 

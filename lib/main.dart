@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trainbuddy/ui/view_models/alarm_view_model.dart';
-import 'package:trainbuddy/ui/views/alarms/alarm_index_view.dart';
-import 'core/constants/app_constants.dart';
+import 'package:transit_buddy/core/services/storage/storage_service.dart';
+import 'package:transit_buddy/models/alarm_repository.dart';
+import 'package:transit_buddy/ui/view_models/alarm_view_model.dart';
+import 'package:transit_buddy/ui/views/alarms/alarm_index_view.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Loads all configurations, services and initial data
+  // - Load configurations
+  await GlobalConfiguration().loadFromPath('lib/assets/configs/app.json');
+
+  // - Initialize storage service
+  await StorageService().init();
+
+  // - Create view models, inject dependencies
+  final alarmViewModel =
+      AlarmViewModel(repository: AlarmRepository(storage: StorageService()));
+  await alarmViewModel.loadData();
+
   runApp(ChangeNotifierProvider(
-    create: (context) => AlarmViewModel(),
-    child: TrainBuddy(),
+    create: (context) => alarmViewModel,
+    child: TransitBuddy(),
   ));
 }
 
 // Main Favourite Things App
-class TrainBuddy extends StatelessWidget {
+class TransitBuddy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: AppConstants.APP_TITLE, home: AlarmIndexView());
+    return MaterialApp(
+        title: GlobalConfiguration().getValue('appTitle'),
+        home: AlarmIndexView());
   }
 }

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.trainbuddy">
+    package="com.example.transit_buddy">
    <application
-        android:label="trainbuddy"
+        android:label="transit_buddy"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

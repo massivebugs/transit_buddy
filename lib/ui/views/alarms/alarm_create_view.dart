@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trainbuddy/ui/view_models/alarm_view_model.dart';
-import 'package:trainbuddy/ui/widgets/alarms/alarm_form_widget.dart';
+import 'package:transit_buddy/ui/view_models/alarm_view_model.dart';
+import 'package:transit_buddy/ui/widgets/alarms/alarm_form_widget.dart';
 
 class AlarmCreateView extends StatefulWidget {
   @override

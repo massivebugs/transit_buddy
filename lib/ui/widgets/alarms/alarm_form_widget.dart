@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trainbuddy/ui/widgets/common/save_button_widget.dart';
+import 'package:transit_buddy/ui/widgets/common/save_button_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
@@ -91,7 +91,7 @@ class _AlarmFormWidgetState extends State<AlarmFormWidget> {
     if (_formKey.currentState.validate()) {
       // Process data
       widget.onSubmit(nameController.text, transitLocationController.text,
-          DateTime.parse(arriveByController.text));
+          arriveByController.text);
     }
   }
 }
