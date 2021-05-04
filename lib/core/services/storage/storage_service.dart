@@ -80,9 +80,10 @@ class StorageService {
   }
 
   /// Returns all records from [tableName]
-  Future<List<Map<String, Object>>> all(tableName) async {
+  Future<List<Map<String, Object>>> all(
+      String tableName, String orderBy) async {
     final List<Map<String, Object>> records =
-        await _db.query(tableName, orderBy: 'id');
+        await _db.query(tableName, orderBy: orderBy);
     return records;
   }
 
@@ -99,7 +100,8 @@ class StorageService {
 
   /// Update a single record in [tableName] with [id]
   /// and return true/false depending on whether success or fail
-  Future<bool> update(String tableName, int id, Map fields) async {
+  Future<bool> update(
+      String tableName, int id, Map<String, Object> fields) async {
     int count =
         await _db.update(tableName, fields, where: 'id = ?', whereArgs: [id]);
     return count == 1;

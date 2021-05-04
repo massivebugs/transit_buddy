@@ -14,43 +14,46 @@ class AlarmListWidget extends StatelessWidget {
       itemCount: alarms.length,
       itemBuilder: (context, index) {
         final item = alarms[index];
-        return Dismissible(
-            key: Key(item.name),
-            onDismissed: (direction) {
-              onRemove(item.id);
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text('${item.name} has been removed!'),
-              ));
-            },
-            background: Container(color: Colors.red),
-            child: ListTile(
-              title: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
+        return Card(
+            child: Dismissible(
+                key: Key(item.name),
+                onDismissed: (direction) {
+                  onRemove(item.id);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('${item.name} has been removed!'),
+                  ));
+                },
+                background: Container(
+                  color: Colors.red[400],
+                  child: Icon(
+                    Icons.delete_outline_sharp,
+                    color: Colors.grey[100],
+                  ),
+                ),
+                child: InkWell(
+                    child: ListTile(
+                  title: Text(
                     alarms[index].name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  subtitle: Text(
                     DateFormat('yyyy/MM/dd hh:mm')
                         .format(alarms[index].arriveBy),
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 13,
                         color: Colors.grey[750]),
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return AlarmShowView(alarm: alarms[index]);
-                }));
-              },
-            ));
+                  ),
+                  // trailing: Icon(Icons.more_vert),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return AlarmShowView(alarm: alarms[index]);
+                    }));
+                  },
+                ))));
       },
     );
   }

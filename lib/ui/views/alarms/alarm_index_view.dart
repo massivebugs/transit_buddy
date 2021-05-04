@@ -13,7 +13,15 @@ class _AlarmIndexViewState extends State<AlarmIndexView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Alarms list')),
+      appBar: AppBar(
+          title: Row(
+        children: [
+          Container(
+              margin: EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.schedule_sharp)),
+          Text('Your schedule')
+        ],
+      )),
       body: Container(child:
           Consumer<AlarmViewModel>(builder: (context, alarmViewModel, child) {
         return AlarmListWidget(

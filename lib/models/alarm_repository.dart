@@ -8,12 +8,15 @@ class AlarmRepository {
   AlarmRepository({@required this.storage});
 
   Future<List<Alarm>> all() async {
-    List<Map<String, dynamic>> records = await storage.all(_tableName);
+    List<Map<String, dynamic>> records =
+        await storage.all(_tableName, 'arriveBy');
     return toList(records);
   }
 
   Future<int> add(
-      {@required name, @required transitLocation, @required arriveBy}) async {
+      {@required String name,
+      @required String transitLocation,
+      @required String arriveBy}) async {
     int id = await storage.create(_tableName, {
       'name': name,
       'transitLocation': transitLocation,
@@ -22,8 +25,10 @@ class AlarmRepository {
     return id;
   }
 
-  Future<bool> update(id,
-      {@required name, @required transitLocation, @required arriveBy}) async {
+  Future<bool> update(int id,
+      {@required String name,
+      @required String transitLocation,
+      @required String arriveBy}) async {
     return storage.update(_tableName, id, {
       'name': name,
       'transitLocation': 'transitLocation',
@@ -31,7 +36,7 @@ class AlarmRepository {
     });
   }
 
-  Future<bool> delete(id) async {
+  Future<bool> delete(int id) async {
     return storage.delete(_tableName, id);
   }
 

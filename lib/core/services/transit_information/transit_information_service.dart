@@ -1,10 +1,12 @@
-import 'package:transit_buddy/core/services/transit_information/src/interfaces/get_transit_data_strategy.dart';
-import 'package:transit_buddy/core/services/transit_information/src/interfaces/parse_data_strategy.dart';
+import 'package:transit_buddy/core/services/transit_information/src/interfaces/transit_data_strategy.dart';
+
+import 'package:meta/meta.dart';
 
 class TransitInformationService {
-  GetTransitDataStrategy getTransitDataStrategy;
-  ParseTransitDataStrategy parseTransitDataStrategy;
+  final TransitDataStrategy transitDataStrategy;
+  TransitInformationService({@required this.transitDataStrategy});
 
-  TransitInformationService(
-      this.getTransitDataStrategy, this.parseTransitDataStrategy);
+  List<Map<String, dynamic>> getInformation(from, to) {
+    return transitDataStrategy.getTransitData(from, to);
+  }
 }

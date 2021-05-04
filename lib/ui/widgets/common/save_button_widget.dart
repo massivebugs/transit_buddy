@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SaveButton extends StatelessWidget {
-  final onSave;
-  SaveButton({@required this.onSave});
+  final onPress;
+  SaveButton({@required this.onPress});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      child: TextButton(
-        child: Text('Save'),
+    return IconButton(
+        icon: Icon(Icons.save),
+        tooltip: 'Save new Alarm',
         onPressed: () {
-          onSave();
-        },
-      ),
-    );
+          onPress();
+        });
   }
 }

@@ -32,6 +32,8 @@ class TransitBuddy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: ThemeData(
+            primaryColor: Colors.red[400], accentColor: Colors.redAccent),
         title: GlobalConfiguration().getValue('appTitle'),
         home: AlarmIndexView());
   }

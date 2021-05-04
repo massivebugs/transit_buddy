@@ -1,59 +1,42 @@
-// import 'package:transit_buddy/constants/app_constants.dart';
-// import 'package:web_scraper/web_scraper.dart';
-// import 'dart:io';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:html/parser.dart';
+import 'package:html/dom.dart';
 
 class WebScrapingService {
-  // // final webScraper = WebScraper(AppConstants.REQUEST_URL);
-  // final WebScraper _scraper;
-  // WebScrapingService() : _scraper = WebScraper();
+  static const String REQUEST_URL = "https://transit.yahoo.co.jp";
+  static const String REQUEST_ENDPOINT = "/search/result";
+  static const List<String> REQUEST_PARAMS = ["from", "to"];
+  static const List TRAIN_ROUTE_CHILDREN = [
+    {
+      'name': 'summary',
+      'query': '.routeSummary',
+      'children': [
+        {'name': 'time', 'query': '.time'},
+        {'name': 'transfer', 'query': '.transfer'},
+        {'name': 'fare', 'query': '.fare'}
+      ]
+    }
+  ];
 
-  // void makeRequest() async {
-  //   final html = await File('test.html').readAsString();
+  void makeRequest() async {
+    // var response = await http.get('https://transit.yahoo.co.jp/search/result?')
+    final html =
+        await File('../../test/data/yahoo_transit/test.html').readAsString();
 
-  //   if (scraper.loadFromString(html)) {
-  //     // .loadWebPage(AppConstants.REQUEST_ENDPOINT + '?from=吉川&to=お茶の水')) {
+    var document = parse(html);
+    var routes = document.querySelectorAll('#srline > div[id^=\'route\']');
+    routes.forEach((element) {
+      var summary = element.querySelector('.routeSummary');
+      var time = summary.querySelector('.time');
+      var fare = summary.querySelector('.fare');
+      var distance = summary.querySelector('.distance');
 
-  //     final Map data = {};
-
-  //     final routes =
-  //         scraper.getElementAttribute(AppConstants.ELEMENTS['routes'], 'id');
-  //     print('There are ${routes.length} routes');
-  //     routes.forEach((route) {
-  //       print('===========================================================');
-  //       final routeTime = scraper.getElementTitle(
-  //           '#' + route + AppConstants.ELEMENTS['summary']['time']);
-  //       final routeTransfer = scraper.getElementTitle(
-  //           '#' + route + AppConstants.ELEMENTS['summary']['transfer']);
-  //       final routeFare = scraper.getElementTitle(
-  //           '#' + route + AppConstants.ELEMENTS['summary']['fare']);
-  //       print(routeTime);
-  //       print(routeTransfer);
-  //       print(routeFare);
-  //       print('===========================================================');
-  //     });
-
-  // final details = webScraper.getElementTitle(
-  //     'div#route01 .routeDetail > .station, div#route01.routeDetail > .fareSection');
-  // print(details);
-  // final stations = webScraper
-  //     .getElementTitle('div#route01 .routeDetail .station'); // 駅（複数可）
-  // final times =
-  //     webScraper.getElementTitle('div#route01 .routeDetail .station .time');
-  // final stationNames =
-  //     webScraper.getElementTitle('div#route01 .routeDetail .station dl dt a');
-
-  // stations.forEach((station) {
-  //   final index = stations.indexOf(station);
-  //   print(times[index] + ': ' + stationNames[index]);
-  //   print('-------------------------------');
-  // });
-
-  // print(webScraper
-  //     .getElement('div#route01 .routeDetail .time li', [])); // 駅（複数可）
-  // }
-  // }
+      print(time.text);
+    });
+  }
 }
 
-// Lets learn more about asynchronous requests
-
-// void main() {}
+void main() {
+  WebScrapingService().makeRequest();
+}
