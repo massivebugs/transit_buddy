@@ -2,7 +2,8 @@ import 'package:transit_buddy/core/services/transit_information/src/interfaces/t
 
 class FakeTransitDataStrategy implements TransitDataStrategy {
   @override
-  List<Map<String, dynamic>> getTransitData(String from, String to) {
+  Future<List<Map<String, dynamic>>> getTransitData(
+      String from, String to) async {
     final now = DateTime.now();
     return [
       {

@@ -44,7 +44,8 @@ class AlarmShowView extends StatelessWidget {
                     arriveByController: arriveByController,
                     selectedAlarm: alarm,
                   ),
-                  TransitRoutesWidget(alarmViewModel.getTransitInformation()),
+                  TransitRoutesWidget(alarmViewModel
+                      .getTransitInformation(alarm.transitLocation)),
                 ]))));
   }
 }

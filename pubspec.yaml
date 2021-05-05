@@ -30,6 +30,9 @@ dependencies:
   global_configuration: ^1.6.0
   html:
   http:
+  location: ^3.0.0
+  geocoding: ^1.0.5
+
 
 
   # The following adds the Cupertino Icons font to your application.

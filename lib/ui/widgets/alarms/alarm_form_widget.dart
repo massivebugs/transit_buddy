@@ -64,6 +64,18 @@ class _AlarmFormWidgetState extends State<AlarmFormWidget> {
                 return null;
               },
             ),
+            // TextFormField(
+            //   controller: widget.transitLocationController,
+            //   decoration: InputDecoration(
+            //       icon: Icon(Icons.location_on_sharp),
+            //       hintText: 'Name of Departure'),
+            //   validator: (String value) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'You must enter the name of a destination.';
+            //     }
+            //     return null;
+            //   },
+            // ),
             TextFormField(
               controller: widget.transitLocationController,
               decoration: InputDecoration(

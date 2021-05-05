@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:transit_buddy/core/helpers/datetime_helpers.dart'
-    as dateTimeHelpers;
-import 'package:transit_buddy/core/services/transit_information/src/concrete/fake_transit_data_strategy.dart';
+import 'package:transit_buddy/core/services/transit_information/src/concrete/yahoo_transit_get_transit_data_strategy.dart';
 import 'package:transit_buddy/core/services/transit_information/transit_information_service.dart';
 import 'package:transit_buddy/models/alarm.dart';
 import 'package:transit_buddy/models/alarm_repository.dart';
+import 'package:location/location.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 
 class AlarmViewModel extends ChangeNotifier {
   final AlarmRepository repository;
@@ -18,10 +18,39 @@ class AlarmViewModel extends ChangeNotifier {
     _alarms = await repository.all();
   }
 
-  List<Map<String, dynamic>> getTransitInformation() {
-    final data = TransitInformationService(
-            transitDataStrategy: FakeTransitDataStrategy())
-        .getInformation('', '');
+  Future<List<Map<String, dynamic>>> getTransitInformation(String to) async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return null;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    List<geocoding.Placemark> placemarks =
+        await geocoding.placemarkFromCoordinates(
+            _locationData.latitude, _locationData.longitude,
+            localeIdentifier: 'ja_JP');
+    print(placemarks);
+
+    final data = await TransitInformationService(
+            transitDataStrategy: YahooTransitDataStrategy())
+        .getInformation('吉川駅', to);
 
     data.forEach((route) {
       final transitType = route['transitType'];
@@ -46,8 +75,6 @@ class AlarmViewModel extends ChangeNotifier {
             route['transitType'] = Icon(Icons.help_center_sharp);
           }
       }
-      route['depart'] = dateTimeHelpers.format(DateTime.parse(route['depart']));
-      route['arrive'] = dateTimeHelpers.format(DateTime.parse(route['depart']));
     });
     return data;
   }

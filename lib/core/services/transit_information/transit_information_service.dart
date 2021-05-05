@@ -6,7 +6,7 @@ class TransitInformationService {
   final TransitDataStrategy transitDataStrategy;
   TransitInformationService({@required this.transitDataStrategy});
 
-  List<Map<String, dynamic>> getInformation(from, to) {
+  Future<List<Map<String, dynamic>>> getInformation(from, to) {
     return transitDataStrategy.getTransitData(from, to);
   }
 }

@@ -43,5 +43,9 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<true/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Transit Buddy needs access to location services</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Transit Buddy needs access to location services</string>
 	</dict>
 </plist>
